@@ -1,0 +1,51 @@
+# Save the output of this file and use kubectl create -f to import
+# it into Kubernetes.
+#
+# Created with podman-4.2.1
+
+# NOTE: If you generated this yaml from an unprivileged and rootless podman container on an SELinux
+# enabled system, check the podman generate kube man page for steps to follow to ensure that your pod/container
+# has the right permissions to access the volumes added.
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    io.kubernetes.cri-o.TTY/kanban-postgres: "false"
+    io.podman.annotations.autoremove/kanban-postgres: "TRUE"
+    io.podman.annotations.init/kanban-postgres: "FALSE"
+    io.podman.annotations.privileged/kanban-postgres: "FALSE"
+    io.podman.annotations.publish-all/kanban-postgres: "FALSE"
+  creationTimestamp: "2022-10-20T11:31:28Z"
+  labels:
+    app: kanban-postgres-pod
+  name: kanban-postgres-pod
+spec:
+  containers:
+  - args:
+    - postgres
+    env:
+    - name: POSTGRES_DB
+      value: kanban
+    - name: POSTGRES_PASSWORD
+      value: kanban
+    - name: POSTGRES_USER
+      value: kanban
+    image: docker.io/library/postgres:9.6-alpine
+    name: kanban-postgres
+    ports:
+    - containerPort: 5432
+      hostPort: 5432
+    securityContext:
+      capabilities:
+        drop:
+        - CAP_MKNOD
+        - CAP_NET_RAW
+        - CAP_AUDIT_WRITE
+    volumeMounts:
+    - mountPath: /var/lib/postgresql/data
+      name: kanban-data-pvc
+  volumes:
+  - name: kanban-data-pvc
+    persistentVolumeClaim:
+      claimName: kanban-data
