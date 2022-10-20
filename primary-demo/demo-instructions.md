@@ -36,7 +36,6 @@ podman inspect kanban-postgres | jq '.[0].NetworkSettings.IPAddress'
 ```bash
 podman run --rm -p 8080:8080 -e POSTGRES_DB=kanban -e POSTGRES_USER=kanban -e POSTGRES_PASSWORD=kanban -e DB_SERVER={postgres-ipaddress} --name kanban-app kanban-app
 ```
-
 replace `{postgres-ipaddress}` with the IP address of the Postgres container
 
 ### Step3: Start the frontend
@@ -95,14 +94,32 @@ Open the following URL in the browser: http://localhost:4200
 
 ### Start PostGreSQL in a pod
 
+Here we declare all the ports that we need for the application. It has to be done before hand. Or in an interactive manner, by each time creating a new pod.
+
 ```bash
 podman run -dt --pod new:kanban-pod -p 5432:5432 -p 8080:8080 -p 4200:80 -v kanban-data:/var/lib/postgresql/data -e POSTGRES_DB=kanban -e POSTGRES_USER=kanban -e POSTGRES_PASSWORD=kanban --name kanban-postgres postgres:9.6-alpine
 ```
 
 ### Start the Kanban App in a pod
 
+#### Build the image before hand
+
+
 ```bash
-podman run -dt --pod kanban-postgres-pod -p 8080:8080 -e POSTGRES_DB=kanban -e POSTGRES_USER=kanban -e POSTGRES_PASSWORD=kanban -e DB_SERVER=localhost --name kanban-app kanban-app
+cd kanban-app
+podman build -t kanban-ui -f ./Dockerfile
 ```
+
+#### Add the container of Kaban App to the pod
+
+```bash
+podman run -dt --pod kanban-pod --name kanban-ui kanban-ui
+```
+
+
+
+
+
+
 
 
