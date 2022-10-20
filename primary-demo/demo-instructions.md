@@ -92,6 +92,10 @@ Open the following URL in the browser: http://localhost:4200
 
 ## Run this application in a Pod
 
+### Prerequisites
+
+**Make sure you are running a podman machine with at least CPU 2 and Memory 4GB.**
+
 ### Start PostGreSQL in a pod
 
 Here we declare all the ports that we need for the application. It has to be done before hand. Or in an interactive manner, by each time creating a new pod.
@@ -104,10 +108,22 @@ podman run -dt --pod new:kanban-pod -p 5432:5432 -p 8080:8080 -p 4200:80 -v kanb
 
 #### Build the image before hand
 
+```bash
+podman build -t kanban-app -f ./kanban-app/Dockerfile
+```
+
+#### Add the container of Kaban App to the pod
 
 ```bash
-cd kanban-app
-podman build -t kanban-ui -f ./Dockerfile
+podman run -dt --pod kanban-pod -e POSTGRES_DB=kanban -e POSTGRES_USER=kanban -e POSTGRES_PASSWORD=kanban -e DB_SERVER=kanban-postgres --name kanban-app kanban-app
+```
+
+### Start the Kanban App in a pod
+
+#### Build the image before hand
+
+```bash
+podman build -t kanban-ui -f ./kanban-ui/Dockerfile
 ```
 
 #### Add the container of Kaban App to the pod
@@ -115,7 +131,6 @@ podman build -t kanban-ui -f ./Dockerfile
 ```bash
 podman run -dt --pod kanban-pod --name kanban-ui kanban-ui
 ```
-
 
 
 
