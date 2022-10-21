@@ -33,24 +33,19 @@ metadata:
   name: kanban-pod
 spec:
   containers:
-  - args:
-    - postgres
-    env:
-    - name: POSTGRES_USER
+  - env:
+    - name: POSTGRESQL_USER
       value: kanban
-    - name: POSTGRES_DB
+    - name: POSTGRESQL_DATABASE
       value: kanban
-    - name: POSTGRES_PASSWORD
+    - name: POSTGRESQL_PASSWORD
       value: kanban
     image: quay.io/centos7/postgresql-13-centos7
     name: kanban-postgres
     ports:
-    - containerPort: 80
-      hostPort: 4200
+    - containerPort: 4000
     - containerPort: 5432
-      hostPort: 5432
     - containerPort: 8080
-      hostPort: 8080
     resources: {}
     securityContext:
       capabilities:
@@ -59,9 +54,6 @@ spec:
         - CAP_NET_RAW
         - CAP_AUDIT_WRITE
     tty: true
-    volumeMounts:
-    - mountPath: /var/lib/postgresql/data
-      name: kanban-data-pvc
   - image: quay.io/slemeur/kanban-ui-ubi:latest
     name: kanban-ui
     resources: {}
@@ -74,7 +66,7 @@ spec:
     tty: true
   - env:
     - name: DB_SERVER
-      value: kanban-postgres
+      value: localhost
     - name: POSTGRES_DB
       value: kanban
     - name: POSTGRES_USER
@@ -93,8 +85,4 @@ spec:
     tty: true
   hostname: kanban-pod
   restartPolicy: Never
-  volumes:
-  - name: kanban-data-pvc
-    persistentVolumeClaim:
-      claimName: kanban-data
 status: {}
