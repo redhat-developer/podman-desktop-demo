@@ -42,7 +42,7 @@ spec:
       value: kanban
     - name: POSTGRES_PASSWORD
       value: kanban
-    image: registry.connect.redhat.com/crunchydata/crunchy-postgres
+    image: docker.io/library/postgres:9.6-alpine
     name: kanban-postgres
     ports:
     - containerPort: 80
@@ -62,7 +62,7 @@ spec:
     volumeMounts:
     - mountPath: /var/lib/postgresql/data
       name: kanban-data-pvc
-  - image: quay.io/slemeur/kanban-ui:latest
+  - image: quay.io/slemeur/kanban-ui-ubi:latest
     name: kanban-ui
     resources: {}
     securityContext:
@@ -81,7 +81,7 @@ spec:
       value: kanban
     - name: POSTGRES_PASSWORD
       value: kanban
-    image: quay.io/slemeur/kanban-app:latest
+    image: quay.io/slemeur/kanban-app-ubi:latest
     name: kanban-app
     resources: {}
     securityContext:
