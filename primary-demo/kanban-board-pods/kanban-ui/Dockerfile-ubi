@@ -1,8 +1,9 @@
 ### STAGE 1: Build ###
 FROM registry.access.redhat.com/ubi8/nodejs-16 AS build
+USER root
 WORKDIR /usr/src/app
 COPY package.json ./
-RUN npm install --force
+RUN npm install
 COPY . .
 RUN npm run build
 
