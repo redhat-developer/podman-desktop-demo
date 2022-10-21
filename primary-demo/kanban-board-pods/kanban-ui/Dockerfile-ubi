@@ -1,5 +1,5 @@
 ### STAGE 1: Build ###
-FROM registry.access.redhat.com/ubi8/nodejs-16 AS build
+FROM node:12.7-alpine AS build
 USER root
 WORKDIR /usr/src/app
 COPY package.json ./
