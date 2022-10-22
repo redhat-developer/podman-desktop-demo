@@ -9,8 +9,15 @@ RUN npm run build
 
 ### STAGE 2: Run ###
 FROM registry.access.redhat.com/ubi8/nginx-120
+
 COPY default.conf "${NGINX_DEFAULT_CONF_PATH}"
 COPY --from=build /usr/src/app/dist/kanban-ui /opt/app-root/src
+
+# Entrypoint
+USER root
+COPY ./entrypoint.sh /
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
+
 # Run script uses standard ways to run the application
-CMD nginx -g "daemon off;"
-EXPOSE 8080
+EXPOSE 80

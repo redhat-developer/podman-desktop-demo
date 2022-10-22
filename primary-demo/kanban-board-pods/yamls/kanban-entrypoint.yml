@@ -54,7 +54,7 @@ spec:
         - CAP_NET_RAW
         - CAP_AUDIT_WRITE
     tty: true
-  - image: quay.io/slemeur/kanban-ui-ubi:latest
+  - image: quay.io/slemeur/kanban-ui-entrypoint:latest
     name: kanban-ui
     resources: {}
     securityContext:
@@ -71,7 +71,7 @@ spec:
       value: kanban
     - name: POSTGRES_PASSWORD
       value: kanban
-    image: quay.io/slemeur/kanban-app-ubi:latest
+    image: quay.io/slemeur/kanban-app-entrypoint:latest
     name: kanban-app
     resources: {}
     securityContext:
