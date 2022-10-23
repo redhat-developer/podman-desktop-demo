@@ -6,5 +6,5 @@ then
 else
       export APP_SERVER="$APP_HOST"
 fi
-sed -i "s/{APP_SERVER}/${APP_SERVER}/" app.py
+sed -i "s/{APP_SERVER}/${APP_SERVER}/" /code/app.py
 flask run

@@ -11,8 +11,10 @@ COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 EXPOSE 5000
 COPY . .
+RUN find /code -exec sh -c "chgrp 0 {}; chmod g+rwX {}" \;
 
 # Entrypoint
 USER root
 COPY ./entrypoint.sh /
 RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
