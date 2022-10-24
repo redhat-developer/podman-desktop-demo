@@ -139,12 +139,12 @@ Wait until the pod is getting created. You'll be automatically redirected to the
     - You can click on "my pod" in the pod section, to show details of the pod
     - Show running containers, access to logs, terminal
 
-
-
 17. Get back into podman desktop.
 
 
-#### Run the redis from rhel8
+# Demo Intrcution with build & run of images
+
+### Run the redis from quay.io
 
 ```bash
 podman run -d -p 6379:6379 --name redis quay.io/centos7/redis-5-centos7
@@ -160,20 +160,13 @@ podman run -d -p 6379:6379 --name redis quay.io/centos7/redis-5-centos7
 podman build -t quay.io/slemeur/python-app -f ./Dockerfile
 ```
 
-#### retrieve IP address of redis
-
-```bash
-podman inspect redis | jq '.[0].NetworkSettings.IPAddress'
-```
-
 #### Run the python app 
-
-Replace the IP address of the redis container `--add-host=redis:{redis-ipaddress}` in the following command
 
 ```bash
 podman run -d -p 8080:5000 --add-host=redis:$(podman inspect redis | jq -r '.[0].NetworkSettings.IPAddress') --name python-app quay.io/slemeur/python-app
 ```
 
+# Instructions to create pod manually from CLI
 
 ## Run this application in a Pod
 
@@ -190,9 +183,6 @@ podman run -dt --pod new:python-pod -p 6379:6379 -p 8080:5000 --name redis quay.
 ```
 
 ### Start the Python Front App in a pod
-
-
-#### Add the container of Kaban App to the pod
 
 ```bash
 podman run -dt --pod python-pod --name blogpython-app quay.io/slemeur/python-app
