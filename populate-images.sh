@@ -13,4 +13,5 @@ podman pull docker.io/library/httpd
 podman pull docker.io/library/golang:latest
 # Python
 podman pull docker.io/library/python:latest
-
+# Kube
+podman pull docker.io/nginx:1.14.2
