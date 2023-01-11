@@ -9,5 +9,5 @@ sh ./run-containers.sh
 # Start Pods
 sh ./pods/start-pods.sh
 
-# OPTION docker-compos
-#sh ./compose/compose-demo.sh
+# OPTIONNAL docker-compose
+# sh ./compose/compose-demo.sh
