@@ -8,5 +8,5 @@ podman pod create --name simple-pod
 podman pod create --name pod-with-volume -p 8000:80 -v demo-earthly:/usr/share/nginx/html
 
 # Start NGINX Pod from YAML
-podman play kube nginx-pod.yaml
+podman play kube ./pods/nginx-pod.yaml
 
