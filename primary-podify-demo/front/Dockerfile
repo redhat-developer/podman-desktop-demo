@@ -14,7 +14,7 @@ COPY . .
 RUN find /code -exec sh -c "chgrp 0 {}; chmod g+rwX {}" \;
 
 # Entrypoint
-USER root
 COPY ./entrypoint.sh /
 RUN chmod +x /entrypoint.sh
+USER 1001
 ENTRYPOINT ["/entrypoint.sh"]
