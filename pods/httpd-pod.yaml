@@ -7,4 +7,4 @@ spec:
   - name: httpd-in-a-pod
     image: quay.io/centos7/httpd-24-centos7:centos7
     ports:
-    - containerPort: 8080
+    - containerPort: 8050
