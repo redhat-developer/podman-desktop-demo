@@ -1,0 +1,18 @@
+{
+  "name": "podman-desktop-slides",
+  "description": "Podman Desktop presentation",
+  "version": "1.1.1",
+  "license": "MIT",
+  "dependencies": {
+    "@asciidoctor/reveal.js": ">=5.0.1",
+    "asciidoctor": ">=3.0.0",
+    "asciidoctor-kroki": ">=0.17.0"
+  },
+  "engines": {
+    "node": ">=v16.13",
+    "npm": ">=8.1"
+  },
+  "scripts": {
+    "prepare": "asciidoctor-revealjs -r asciidoctor-kroki 2023-podman-desktop.adoc"
+  }
+}

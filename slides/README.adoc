@@ -1,0 +1,22 @@
+= Building the slides
+
+.Prerequisites
+* Node.js
+* yarn
+
+.Procedure
+. Install npm packages:
++
+----
+$ npm install
+----
+
+. Generate the HTML:
++
+----
+$ npm run prepare
+----
+
+.Verification
+
+* Browse the xref:2023-podman-desktop.html[] file.

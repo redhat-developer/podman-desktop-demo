@@ -1,0 +1,696 @@
+= Podman Desktop 1.1
+:author: Fabrice Flore-Thebault
+:backend: revealjs
+:highlightjs-languages: asciidoc, shell
+:icons: font
+:imagesdir: images
+:lang: en
+:revdate: 2023-06-17
+:revealjs_autoSlide: 10000
+:revealjs_defaultTiming: 60
+:revealjs_height: 1080
+:revealjs_parallaxBackgroundImage: {imagesdir}/sky.jpg
+:revealjs_parallaxBackgroundSize: 2958px 2308px
+:revealjs_plugin_search: enabled
+:revealjs_slideNumber: true
+:revealjs_theme: white
+:revealjs_width: 1920
+:source-highlighter: highlightjs
+:title-slide-background-image: sky.jpg
+:toc: preamble
+
+video::podman-desktop-starting.mp4[opts="autoplay,loop,nocontrols"]
+
+https://flore-thebault.com/slides/2023-podman-desktop/
+
+Devconf.cz, Brno, 2023-06-17 (link:https://devconfcz2023.sched.com/event/1MYdk/podman-desktop-your-new-best-companion-to-go-from[Morning], link:https://devconfcz2023.sched.com/event/1MYdb/podman-desktop-from-containers-to-kubernetes[Afternoon])
+
+== Challenging movements between local developer environments and production deployments
+
+[plantuml,target=generated_from-dev-to-prod,format=svg,opts=interactive,width="100%"]
+....
+@startmindmap from-dev-to-prod
+*:-> Publishing
+<- Reproducing;
+left side
+** <b>Local</b>
+***_ Development team
+***_ Container engine / Minikube
+***_ Base images: Docker Hub
+***_ Low / No security
+***_ Container registry: Docker Hub
+***_ Docker Compose
+***_ No bindings with managed services
+right side
+** <b>Production</b>
+***_ Ops team
+***_ OpenShift
+***_ Base images
+***_ Rootless
+***_ Container registry: Quay.io / private
+***_ Kubernetes YAML
+***_ Managed services
+....
+
+=== Why: current challenges
+
+[.stretch]
+image::challenges-dev-prod.svg[]
+
+=== Vision: simplifying the onboarding
+
+[.stretch]
+image::simplistic-onboarding.svg[]
+
+== Introducing Podman Desktop 1.1 Community Edition
+
+Containers and Kubernetes for Application Developers
+
+[.stretch]
+image::podman-desktop-dashboard-4k.png[]
+
+=== Podman, Kubernetes, OpenShift Local
+
+* Install and run anywhere: Windows, macOS and Linux
+* Keep up-to-date
+
+[.stretch]
+image::podman-desktop-website-downloads.png[]
+
+=== Containers and pods
+
+* Build, run, manage
+* Pods in your container engine
+* Multiple container engines
+* Compatible with Docker Compose
+
+[.stretch]
+image::podman-desktop-pods-list.png[]
+
+=== Ready for the enterprise
+
+* VPN and proxy
+* Image registry
+* Install in a restricted environment
+
+[.stretch]
+image::podman-desktop-settings-proxy.png[]
+
+=== Bridge between local and remote
+
+* Connect and deploy to remote OpenShift/Kubernetes clusters
+
+[.stretch]
+image::podman-desktop-systray-kubernetes-context.png[]
+
+== The basics
+
+image::sky.jpg[background,size=cover]
+
+. Creating a Podman machine (On Windows and macOS).
+. Pulling an image.
+. Starting a container.
+. Building an image.
+
+[.columns]
+== Initializing and running Podman
+
+[.column]
+.Prerequisites
+* Windows or macOS.
+* Podman (binary) is installed.
+
+[.column]
+.Procedure
+. Go to **Dashboard**.
+. On the **Podman** tile, click **Initialize and start**.
+
+[.column]
+.Verification
+. Go to **icon:cog[set=fas]{nbsp}Settings > Resources**.
+. On the **Podman** tile, your **Podman Machine** is **running**.
+. The **Restart** and **Stop** buttons are active.
++
+image::podman-resources.png[]
+
+=== Initializing and running Podman
+
+[.stretch]
+video::01-InitializeAndRunningPodman.mp4[opts="autoplay"]
+
+[.columns]
+== Initializing and running a Podman machine with root privileges
+
+[.column]
+.Procedure
+. Go to **icon:cog[set=fas]{nbsp}Settings > Resources**.
+. On the **Podman** tile, click **Create new**.
+.. **Machine with root privileges**: set to **Enabled**.
+.. Click **Create**.
+
+[.column]
+image::creating-a-podman-machine-with-root-privileges.png[]
+
+[.columns]
+== Pulling an image
+
+[.column]
+.Procedure
+. Go to **icon:cloud[set=fas]{nbsp}Images**.
+. **icon:arrow-circle-down[set=fas]{nbsp}Pull an image**.
+.. **Image to Pull**: enter: `redis`.
+.. Click **Pull image**.
+. Click **Done**.
+
+[.column]
+.Verification
+. Go to **icon:cloud[set=fas]{nbsp}Images**.
+. Click the `docker.io/library/redis` image.
+. Go to **Summary**.
+. Go to **History**.
+.. Click the output area.
+.. Enter `Ctrl + F` to search the content.
+. Go to **Inspect**.
+.. Click the output area.
+.. Enter `Ctrl + F` to search the content.
+
+=== Pulling an image (screenshot)
+
+[.stretch]
+image::pulling-the-redis-image.png[Pulling the `redis` image]
+
+=== Pulling an image (screencast)
+
+[.stretch]
+video::pulling-the-redis-image.mp4[opts="autoplay"]
+
+=== Pulling an image and starting a container
+
+[.stretch]
+video::02-PullImage-StartContainer.mp4[opts="autoplay"]
+
+[.columns]
+== Starting a container
+
+[.column]
+.Prerequisites
+* The **icon:cloud[set=fas]{nbsp}Images** list contains `docker.io/library/redis`.
+
+[.column]
+.Procedure
+. Go to **icon:cloud[set=fas]{nbsp}Images**.
+. On the `docker.io/library/redis` line, click **icon:play[set=fas]**.
+. In the **Create a container** screen, review the configuration:
+.. **Container name**: enter `redis`.
+. Click **icon:play[set=fas]{nbsp}Start Container**.
+
+[.column]
+.Verification
+. Go to **icon:cubes[set=fas]{nbsp}Containers**.
+. Click the __redis__ container.
+. Go to **Terminal**.
+. Click the content area to activate the terminal.
+. Enter:
++
+----
+$ redis-cli
+$ SET hello podman
+$ GET hello
+----
+. You see `redis-cli` answer:
++
+----
+"podman"
+----
+
+=== Starting a redis container (screenshot)
+
+[.stretch]
+image::starting-a-redis-container.png[Pulling the `redis` image]
+
+=== Starting a redis container (screencast)
+
+[.stretch]
+video::starting-a-redis-container.mp4[opts="autoplay"]
+
+=== Pulling an image and starting a redis container
+
+[.stretch]
+video::03-Pull-Start-Terminal.mp4[opts="autoplay"]
+
+[.columns]
+== Starting a container from an image that exposes a port
+
+[.column]
+.Prerequisites
+* The **icon:cloud[set=fas]{nbsp}Images** list contains `docker.io/library/nginx`.
+
+[.column]
+.Procedure
+. Go to **icon:cloud[set=fas]{nbsp}Images**.
+. **Pull an image**.
+. Enter: `nginx`.
+. **Start container**.
+
+[.column]
+.Verification
+. Go to **icon:cubes[set=fas]{nbsp}Containers**.
+. Click the container based on the __nginx__ image.
+. Click **Open Browser**.
+. Your browser opens http://localhost:9000 and displays:
++
+----
+Welcome to nginx!
+----
+
+=== Starting a nginx container (screenshot)
+
+[.column.is-two-thirds]
+image::starting-a-nginx-container.png[Podman Desktop window displaying nginx container logs,.stretch]
+
+=== Starting a nginx container (screencast)
+
+[.stretch]
+video::starting-a-nginx-container.mp4[opts="autoplay"]
+
+[.columns]
+== Building an image from Containerfile
+
+[.column]
+.Prerequisites
+* A Containerfile or Dockerfile on your local filesystem.
+
+[.column]
+.Procedure
+. Go to **icon:cloud[set=fas]{nbsp}Images**.
+. Click Build an image.
+.. **Containerfile path**: select the Containerfile to build.
+.. **Image Name**: enter your image name, such as `quay.io/themr0c/podman-desktop-demos`.
+. Click **Build**.
+. Click **Done**.
+
+.Verification
+. Click the line with your image name.
+. You see the image **Summary**.
+. Click **History**.
+. Click the content area.
+. Enter `Ctrl + F` to search the content.
+. Click **Inspect**.
+. Click the content area.
+. Enter `Ctrl + F` to search the content.
+. Click **icon:play[set=fas]**.
+. You see the **Create a container** screen.
+
+=== Building an image from Containerfile (screenshot)
+
+image::building-an-image.png[Building an image,.stretch]
+
+=== Building an image from Containerfile (screencast)
+
+[.stretch]
+video::06-BuildImage-From-Containerfile.mp4[opts="autoplay"]
+
+== Support for OCI Registries
+
+image::sky.jpg[background,size=cover]
+
+. Configuring registries.
+. Pulling images.
+. Building and tagging images.
+. Pushing images.
+
+[.columns]
+== Configuring a pre-configured registry
+
+[.column]
+.Prerequisites
+* You have credentials on a pre-configured image registry:
+** Red Hat Quay
+** Docker Hub
+** GitHub
+** Google Container registry
+* (For the verification) Image built with the fully qualified name, such as `quay.io/themr0c/podman-desktop-demos`.
+
+[.column]
+.Procedure
+. Go to **icon:cog[set=fas]{nbsp}Settings > Registries**.
+. On your registry line, click *Configure*.
+.. *User name*: Enter your user name.
+.. *Password*: Enter your password or OAuth secret.
+
+[.column]
+.Verification
+. Go to **icon:cloud[set=fas]{nbsp}Images**
+. Click **icon:ellipsis-v[set=fas]**.
+. The contextual menu has a **icon:arrow-up[set=fas]{nbsp}Push Image** entry.
+
+=== Configuring a registry (screenshot)
+
+image::configuring-a-registry.png[Configuring a registry,.stretch]
+
+=== Configuring a registry and pushing an image to the registry (screencast)
+
+[.stretch]
+video::07-ConfigureRegistryPushImage.mp4[opts="autoplay"]
+
+[.columns]
+== Pushing an image to a registry
+
+[.column]
+.Prerequisites
+* Registry is configured.
+* Image built with the fully qualified name, such as `quay.io/themr0c/podman-desktop-demos`.
+
+[.column]
+.Procedure
+. Go to **icon:cloud[set=fas]{nbsp}Images**.
+. On your image line, click **icon:ellipsis-v[set=fas] > icon:arrow-up[set=fas]{nbsp}Push image**.
+. Select the **Image tag** for your registry, such as `quay.io/themr0c/podman-desktop-demos`.
+. Click *icon:arrow-circle-up[set=fas]{nbsp}Push image*.
+. Click *Done*.
+
+[.column]
+.Verification
+. Go to your container registry, and find your image.
+
+=== Pushing an image context menu
+
+image::pushing-an-image-context-menu.png[Pushing an image context menu]
+
+=== Pushing an image: selecting image tag
+
+image::pushing-an-image-select-tag.png[Selecting image tag]
+
+== Podman pods
+
+image::sky.jpg[background,size=cover]
+
+. Selecting containers to run in a pod.
+. Generating Kubernetes YAML from a pod.
+. Starting a pod from a Kubernetes YAML file.
+
+[.columns]
+== Selecting containers to run in a pod
+
+[.column]
+.Prerequisites
+* Two containers (running or stopped):
+** `redis` from image: `quay.io/centos7/redis-5-centos7:latest`
+** `python-app` from image: `quay.io/slemeur/python-app:latest`
+
+[.column]
+.Procedure
+. Go to **icon:cube[set=fas]{nbsp}Containers**.
+. Click the checkbox in the container line for `redis` and `python-app`.
+. Click **icon:cubes[set=fas]**.
+. **Copy containers to a pod**:
+** **Name of the pod**: enter `python-app-pod`.
+** **All selected ports will be exposed**:
+*** Select `python-app`.
+*** Unselect `redis`.
+. Click **icon:cube[set-fas]{nbsp}Create Pod**.
+
+[.column]
+.Verification
+. Go to **icon:cubes[set=fas]{nbsp}Pods**.
+. Click `python-app-pod`.
+. Go to *Logs*: see the combined logs from the two containers.
+. Go to *Summary*: see the containers.
+. Click `python-app-podified`.
+. Click icon:rocket[set=fas].
+. Your browser opens http://localhost:8080 and displays _Hello World!
+I have been seen 1 times._
+. Go to *icon:cube[set=fas]{nbsp}Containers*: see the running containers.
+
+=== Selecting containers to run in a pod (screencast)
+
+[.stretch]
+video::selecting-containers-to-start-a-pod.mp4[opts="autoplay"]
+
+=== Selecting containers to run in a pod (screencast)
+
+[.stretch]
+video::04-StartPodFromContainer.mp4[opts="autoplay"]
+
+=== Selecting containers to run in a pod (screencast)
+
+[.stretch]
+video::12-Podify.mp4[opts="autoplay"]
+
+[.columns]
+== Generating Kubernetes YAML from a pod
+
+[.column]
+.Prerequisites
+* A pod.
+
+[.column]
+.Procedure
+. Go to **icon:cubes[set=fas]{nbsp}Pods**.
+. Click the pod.
+. Go to **Kube**.
+. Select and copy all the content.
+
+image::generating-kubernetes-yaml-from-a-pod.png[Generatin Kubernetes YAML from a pod]
+
+[.columns]
+== Starting a pod from a Kubernetes YAML file
+
+[.column]
+.Prerequisites
+* A Kubernetes YAML file on your local machine.
+
+[.column]
+.Procedure
+. Go to **icon:cubes[set=fas]{nbsp}Pods**.
+. Click *Play Kubernetes YAML*.
+. *Select file*: select your Kubernetes YAML file (pods/redis-pod.yaml).
+. *Select runtime*: select *Using a Podman container engine*.
+. Click *Play*.
+. Click *Done*.
+
+[.column]
+.Verification
+. Go to **icon:cubes[set=fas]{nbsp}Pods**.
+. Click the pod you created.
+. Go to *Logs*
+. Go to *Summary*
+. Go to *Inspect*
+. Go to *Terminal*:
+. Enter:
++
+----
+redis-cli
+SET hello podman
+Get hello
+----
+. See `"podman"`.
+
+=== Starting a pod from Kubernetes YAML (screencast)
+
+[.stretch]
+video::05-StartPodFromYAML.mp4[opts="autoplay"]
+
+[.columns]
+== Podman Desktop extensions
+
+image::sky.jpg[background,size=cover]
+
+[.column]
+* Podman
+* Docker
+* Lima
+* OpenShift Local
+* Kind
+* Developer Sandbox
+
+[.columns]
+image::podman-desktop-extensions.png[]
+
+=== Installing software from Podman Desktop
+
+* Podman
+* Kind
+* OpenShift Local
+* Docker Compose
+* Docker extensions
+
+== Choosing a Kubernetes distribution
+
+image::sky.jpg[background,size=cover]
+
+[plantuml,target=generated_choosing-your-kubernetes-distribution,format=svg,opts=interactive,width="100%"]
+....
+@startmindmap experience
+<style>
+node {
+    MinimumWidth 150
+    MaximumWidth 150
+}
+rootNode {
+    MinimumWidth 220
+    MaximumWidth 220
+}
+boxless {
+    MinimumWidth 300
+    MaximumWidth 300
+}
+</style>
+
+
+*:<b>Developer Sandbox</b>
+* Managed by Red Hat
+* OpenShift Container Platform
+* Developer tools;
+left side
+** Developer experience
+***_ Networking, Ingress, Storage, Helm
+***_ Console
+***_ Helm charts catalog
+***_ Red Hat builder images catalog
+***_ s2i build tool
+***_ OpenShift Dev Spaces
+right side
+** Quotas
+***_ Limited to developer role
+***_ 30 days
+***_ 1 project (namespace)
+***_ 14 GiB RAM
+***_ 40 GiB storage
+***_ Pods stop after 12 hours
+
+*:<b>Single-node OpenShift</b>
+* OpenShift Local
+* OpenShift Container Platform;
+left side
+** Full services set
+***_ Networking, Ingress, Storage, Helm
+***_ Cluster Operators
+***_ Operator Lifecycle Manager
+***_ Monitoring
+***_ Logging
+***_ Registry
+***_ Authorization
+***_ Console
+***_ VMs
+right side
+** Resource-intensive requirements
+***_ 4 vCPUs
+***_ 8 GiB RAM
+***_ 35 GiB storage
+
+*:<b>Light and optimized</b>
+* OpenShift Local
+* MicroShift;
+left side
+** Minimal services set
+***_ Networking, Ingress, Storage, Helm
+right side
+** Lightweight requirements
+***_ 2 vCPUs
+***_ 2 GiB RAM
+***_ 10 GiB storage
+
+*:<b>Kubernetes in a container</b>
+* Container engine
+* Kind;
+left side
+** Minimal services set
+***_ Networking, Ingress, Storage
+right side
+** Lightweight requirements
+***_ 2 vCPUs
+***_ 2 GiB RAM
+***_ 10 GiB storage
+....
+
+== Developer Sandbox
+
+=== Installing Developer Sandbox
+
+[.stretch]
+video::20-DevSandbox-Intallation.mp4[opts="autoplay"]
+
+=== Configuring Developer Sandbox
+
+[.stretch]
+video::21-DevSandbox-Configuring.mp4[opts="autoplay"]
+
+
+=== Deploying a pod to Developer Sandbox (screencast)
+
+[.stretch]
+video::15-OpenShift-DeployToKubernetes.mp4[opts="autoplay"]
+
+== OpenShift Local
+
+=== Installing OpenShift Local (screencast)
+
+[.stretch]
+video::16-OpenShiftLocal-Installation.mp4[opts="autoplay"]
+
+=== Playing Kubernetes YAML on OpenShift Local
+
+[.stretch]
+video::17-OpenShiftLocal-PlayYAML.mp4[opts="autoplay"]
+
+=== Deploying to OpenShift Local
+
+[.stretch]
+video::18-OpenShiftLocal-DeployToOpenShiftLocal.mp4[opts="autoplay"]
+
+=== Pushing an image to OpenShift Local
+
+[.stretch]
+video::19-OpenShiftLocal-PushImageToOpenShiftLocal.mp4[opts="autoplay"]
+
+[.columns]
+== Kind
+
+[.column]
+.Prerequisites
+* Podman with root privileges.
+
+[.column]
+.Procedure
+. In the status bar, click on **Kind**
+. Follow the prompts to install the `kind` CLI.
+. Go to **icon:cog[set=fas] Settings > Resources**.
+. In the **Kind** tile, click on the **Create new** button.
+. Enable the **ingress controller** option, and click **Create**.
+
+=== Creating a Kind cluster (screenshot)
+
+[.stretch]
+image::creating-a-kind-cluster.png[]
+
+=== Kind in the resources screen
+
+[.stretch]
+image::kind-resources.png[]
+
+=== Creating a Kind cluster (screencast)
+
+[.stretch]
+video::09-CreateKindCluster.mp4[opts="autoplay"]
+
+=== Working with a Kind cluster (screencast)
+
+[.stretch]
+video::10-KindInteractCluster.mp4[opts="autoplay"]
+
+=== Playing Kubernetes YAML on Kind (screencast)
+
+[.stretch]
+video::11-KindPlayKubernetesYAML.mp4[opts="autoplay"]
+
+=== Deploying a pod to a Kind cluster (screencast)
+
+[.stretch]
+video::13-Kind-Kubify.mp4[opts="autoplay"]
+
+=== Pushing an image to a Kind cluster (screencast)
+
+[.stretch]
+video::14-Kind-PushImageToKind.mp4[opts="autoplay"]
+
