@@ -1,0 +1,13 @@
+{
+  "name": "primary-podify-demo",
+  "version": "1.0.0",
+  "description": "Demo of the Podify flow",
+  "main": "index.js",
+  "repository": "github.com/redhat-developers/podman-desktop-demo",
+  "author": "Stevan Le Meur",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "tailwindcss": "^3.3.2"
+  }
+}
