@@ -19,7 +19,9 @@ kubectl apply -f https://k8s.io/examples/application/guestbook/frontend-service.
 
 # Port Forwarding
 echo "Waiting for the frontend Service to be ready..."
-echo "Once ready, run command 'kubectl port-forward svc/frontend 6777:80'"
-echo "All done! Now you can access the guestbook at http://localhost:6777"
+echo "This may take a few minutes..."
+echo "Check the status with 'kubectl get services'"
+echo "Once ready, run command 'kubectl port-forward svc/frontend 8080:80'"
+echo "All done! Now you can access the guestbook at http://localhost:8080"
 
 
