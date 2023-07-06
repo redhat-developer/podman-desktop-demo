@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Podman Desktop</title>
+  <link href="{{url_for('static',filename='css/main.css')}}" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- Splashscreen -->
+  <div class="h-4/6 bg-gradient-to-r from-sky-600 to-purple-700 py-24">
+  {% if count %}
+    <h3 class="text-4xl text-center font-semibold text-slate-50 py-12 font-mono">Hello World! This website have been viewed</h3>
+      <!-- White container with rounded corners and big text -->
+        <div class="bg-white mx-auto w-64 h-40 rounded-md shadow-lg">
+          <div class="text-center text-8xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-sky-600 to-purple-700 py-6 font-mono">{{ count }}</div>
+        </div>
+    <h3 class="text-4xl text-center font-semibold text-slate-50 pt-5 font-mono">time(s)</h3>
+       
+  {% else %}
+    <h1>Hello, World!</h1>
+  {% endif %}
+  </div>
+
+  <img src="static/img/podman-desktop_logo.png"  class="mx-auto h-auto py-12"  alt="podman-logo" />
+
+  <div class="grid grid-cols-2 gap-4 w-2/3 mx-auto">
+    <div class="max-w-md flex flex-col bg-slate-100 rounded border-solid border-1 border-slate-200">
+        <img src="static/img/learn.png" class="order-first w-20 h-26 mx-auto py-6" alt="learn" />
+        <dd class="text-center text-lg font-semibold text-gray-700 pl-2" >Learn More</dd>
+        <dt class="text-base text-center leading-7 text-gray-500 pl-2">Downloads, release notes, docs, tutorials, and more available at <a href="http://podman-desktop.io" class="font-semibold text-purple-700">podman-desktop.io</a> </dt>
+    </div>
+    <div class="max-w-md flex flex-col bg-slate-100 rounded border-solid border-1 border-slate-200">
+        <img src="static/img/community.png" class="order-first w-20 h-26 mx-auto py-6" alt="learn" />
+        <dd class="text-center text-lg font-semibold text-gray-700 pl-2" >Join the community</dd>
+        <dt class="text-base text-center leading-7 text-gray-500 pl-2"> <a href="http://podman-desktop.io" class="font-semibold text-purple-700">Hop on to our discussion board </a> and connect with other Podman Desktop users, give your feedback!</dt>
+    </div>
+    <div class="max-w-md flex flex-col bg-slate-100 rounded border-solid border-1 border-slate-200">
+        <img src="static/img/chat.png" class="order-first w-20 h-26 mx-auto py-6" alt="learn" />
+        <dd class="text-center text-lg font-semibold text-gray-700 pl-2" >Chat</dd>
+        <dt class="text-base text-center leading-7 text-gray-500 pl-2">Join our chat room on Discord, Matrix, and IRC (they're bridged together!) <a href="http://podman-desktop.io" class="font-semibold text-purple-700">Join our chat</a> </dt>
+    </div>
+    <div class="max-w-md flex flex-col bg-slate-100 rounded border-solid border-1 border-slate-200">
+        <img src="static/img/repo.png" class="order-first w-20 h-26 mx-auto py-6" alt="repo" />
+        <dd class="text-center text-lg font-semibold text-gray-700 pl-2" >Star us on GitHub</dd>
+        <dt class="text-base text-center leading-7 text-gray-500 pl-2">Follow our project, file an issue, or make a pull request! github.com/containers/podman-desktop <a href="http://github.com/containers/podman-desktop" class="font-semibold text-purple-700">github.com/containers/podman-desktop</a> </dt>
+    </div>
+
+
+  </div>
+
+
+</body>
+
+</html>
