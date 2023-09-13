@@ -16,3 +16,4 @@ COPY ./entrypoint.sh /
 RUN chmod +x /entrypoint.sh
 USER 1001
 ENTRYPOINT ["/entrypoint.sh"]
+LABEL io.podman.demo=awesome
