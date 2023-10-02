@@ -1,10 +1,13 @@
 #!/bin/bash
-APP_HOST=$(grep redis /etc/hosts | cut -f 1)
-if [ -z "$APP_HOST" ]
+
+# use redis hostname if available, otherwise use localhost
+if getent hosts redis 1>/dev/null;
 then
-      export APP_SERVER="localhost"
+      export APP_SERVER="redis"
 else
-      export APP_SERVER="$APP_HOST"
+      export APP_SERVER="localhost"
 fi
+
+echo Using redis host ${APP_SERVER}
 sed -i "s/{APP_SERVER}/${APP_SERVER}/" /code/app.py
 flask run
