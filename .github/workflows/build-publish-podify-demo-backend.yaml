@@ -16,14 +16,14 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-name: Build and publish the images of podify demo
+name: Build and publish the backend image of podify demo
 
 on:
   push:
     branches:
       - main
     paths:
-      - "primary-podify-demo/frontend/**"
+      - "primary-podify-demo/backend/**"
   workflow_dispatch:
 
 jobs:
@@ -39,15 +39,15 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y qemu-user-static
 
-      - name: Build Frontend Image
+      - name: Build Backend Image
         id: build-image
         uses: redhat-actions/buildah-build@v2
         with:
-          image: podify-demo-frontend
+          image: podify-demo-backend
           tags: v1 ${{ github.sha }}
           containerfiles: |
-            ./primary-podify-demo/front/Dockerfile
-          context: ./primary-podify-demo/front
+            ./primary-podify-demo/backend/Dockerfile
+          context: ./primary-podify-demo/backend
           archs: amd64, arm64
 
       - name: Echo Outputs
