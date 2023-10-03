@@ -7,7 +7,6 @@ then
 else
       export APP_SERVER="localhost"
 fi
-
 echo Using redis host ${APP_SERVER}
 sed -i "s/{APP_SERVER}/${APP_SERVER}/" /code/app.py
 flask run
