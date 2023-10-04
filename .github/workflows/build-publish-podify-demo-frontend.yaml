@@ -23,7 +23,7 @@ on:
     branches:
       - main
     paths:
-      - "primary-podify-demo/frontend/**"
+      - "primary-podify-demo/front/**"
   workflow_dispatch:
 
 jobs:
