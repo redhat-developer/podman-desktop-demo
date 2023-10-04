@@ -1,7 +1,7 @@
+import os
 import time
-
 import redis
-from flask import Flask, render_template
+from flask import Flask, render_template, send_from_directory
 
 app = Flask(__name__)
 cache = redis.Redis(host='{APP_SERVER}', port=6379)
@@ -22,5 +22,8 @@ def get_hit_count():
 def hello(count=None):
     count = get_hit_count()
     return render_template('index.html', count=count)
-    #count = get_hit_count()
-    #return 'Hello ffff World! I have been seen {} times.\n'.format(count)
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static', 'img'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
