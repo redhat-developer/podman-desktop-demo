@@ -53,7 +53,7 @@ RUN redis-cli --version && redis-server --version
 RUN cp /usr/local/bin/redis-server /mnt/rootfs/usr/local/bin/redis-server
 
 # Configure quickly redis
-RUN echo -e "port 6379\nprotected-mode no\n" > /mnt/rootfs/etc/redis.conf
+RUN echo -e "port 6379\nprotected-mode no\ndir /tmp\nalways-show-logo yes\n" > /mnt/rootfs/etc/redis.conf
 
 # Use scratch image and then copy ubi fs
 FROM scratch
