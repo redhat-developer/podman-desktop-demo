@@ -60,6 +60,6 @@ FROM scratch
 COPY --from=ubi-builder /mnt/rootfs/ /
 # Create redis user
 RUN groupadd -g 1000 redis && useradd -u 1000 -g redis -G root redis
-USER redis
+USER 1000
 # start the database as entrypoint
 ENTRYPOINT ["/usr/local/bin/redis-server", "/etc/redis.conf"]

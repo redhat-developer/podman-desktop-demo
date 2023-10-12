@@ -58,7 +58,7 @@ COPY --from=python-builder / /
 # expose frontend port
 EXPOSE 5000
 
-USER frontend
+USER 1000
 
 WORKDIR /app
 
