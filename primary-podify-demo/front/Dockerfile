@@ -31,8 +31,8 @@ RUN yum install --installroot /mnt/rootfs coreutils-single curl shadow-utils \
 # use the final root filesystem as default directory
 WORKDIR /mnt/rootfs
 
-COPY ./entrypoint.sh /mnt/rootfs
-RUN chmod +x /mnt/rootfs/entrypoint.sh
+COPY ./start.sh /mnt/rootfs
+RUN chmod +x /mnt/rootfs/start.sh
 
 FROM scratch as python-builder
 COPY --from=ubi-builder /mnt/rootfs/ /
@@ -65,4 +65,4 @@ WORKDIR /app
 ENV FLASK_APP=app.py FLASK_RUN_HOST=0.0.0.0
 
 # start flask
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/start.sh"]
