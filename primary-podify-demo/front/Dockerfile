@@ -66,3 +66,4 @@ ENV FLASK_APP=app.py FLASK_RUN_HOST=0.0.0.0
 
 # start flask
 ENTRYPOINT ["/entrypoint.sh"]
+LABEL io.podman.demo=awesome
