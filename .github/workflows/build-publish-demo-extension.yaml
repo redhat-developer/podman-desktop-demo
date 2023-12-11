@@ -48,6 +48,7 @@ jobs:
           containerfiles: |
             ./extension/Dockerfile
           context: ./extension
+          oci: true
           archs: amd64, arm64
 
       - name: Echo Outputs
