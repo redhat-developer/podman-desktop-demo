@@ -37,7 +37,21 @@
         "title": "Cleanup images",
         "category": "Podman Desktop Demo"
       }
-    ]
+    ],
+    "views": {
+      "icons/containersList": [
+        {
+          "when": "io.podman.demo in containerLabelKeys",
+          "icon": "${podman-icon}"
+        }
+      ],
+      "icons/image": [
+        {
+          "when": "io.podman.demo in imageLabelKeys",
+          "icon": "${podman-icon}"
+        }
+      ]
+    }
   },
   "scripts": {
     "build": "vite build",
