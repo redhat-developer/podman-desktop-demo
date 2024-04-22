@@ -58,7 +58,7 @@ spec:
                 fieldRef:
                   fieldPath: metadata.namespace
             - name: API_BASE_URL
-              value: http://localhost:<port-mapped-on-kind>
+              value: http://localhost:9090
           image: quay.io/quarkus-super-heroes/ui-super-heroes:native-latest
           imagePullPolicy: Always
           livenessProbe:
