@@ -1,6 +1,6 @@
 # WASM Port of Doom game in browser
 
-This is a port of the [Doom game](https://en.wikipedia.org/wiki/Doom_(1993_video_game)) to the web using [WebAssembly](https://webassembly.org/) and [Rust](https://www.rust-lang.org/).
+This is a port of the [Doom game](https://en.wikipedia.org/wiki/Doom_(1993_video_game)) to the web using [WebAssembly](https://webassembly.org/).
 
 ## Podman Compose
 
