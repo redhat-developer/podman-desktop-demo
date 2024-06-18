@@ -11,7 +11,7 @@ To run the game, you need to have [Podman](https://podman.io/) installed, and th
 When in this directory, run the `podman-compose` command to bring up the container:
 
 ```bash
-podman-compose up
+podman compose up
 ```
 
 Alternatively, just run the `ghcr.io/trisnol/doom-wasm:main` image directly with Podman.
