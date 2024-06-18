@@ -4,7 +4,7 @@ This is a port of the [Doom game](https://en.wikipedia.org/wiki/Doom_(1993_video
 
 ## Podman Compose
 
-To run the game, you need to have [Podman](https://podman.io/) installed, and the [`podman-compose`](https://github.com/containers/podman-compose) script available (included in Podman Desktop).
+To run the game, you need to have [Podman](https://podman.io/) installed, and the Podman Compose binary included with Podman Desktop.
 
 ### Instructions
 
