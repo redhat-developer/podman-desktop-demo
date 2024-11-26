@@ -1,0 +1,27 @@
+version: v1.0
+application:
+  type: language
+  name: Search Podman Desktop website
+  description: Search pages in Podman Desktop by keyword
+  containers:
+    - name: llamacpp-server
+      contextdir: ./llamacpp_python
+      containerfile: ./base/Containerfile
+      model-service: true
+      backend:
+        - llama
+      arch:
+        - arm64
+        - amd64
+      ports:
+        - 8001
+      image: quay.io/phmartin/llamacppp_python:latest
+    - name: search-podman-desktop-app
+      contextdir: app
+      containerfile: Containerfile
+      arch:
+        - arm64
+        - amd64
+      ports:
+        - 5000
+      image: quay.io/phmartin/search-podman-desktop-app:latest
