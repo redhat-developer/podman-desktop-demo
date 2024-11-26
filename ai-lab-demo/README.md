@@ -91,13 +91,13 @@ The App we want to bootstrap is a micro-service to search on the Podman Desktop 
       "id": "search-podman-desktop-io",
       "description" : "Search on Podman-desktop.io website",
       "name" : "Search Podman-desktop.io",
-      "repository": "https://github.com/feloy/podman-ai-lab-demo",
+      "repository": "https://github.com/redhat-developer/podman-desktop-demo",
       "ref": "main",
       "icon": "natural-language-processing",
       "categories": [
         "natural-language-processing"
       ],
-      "basedir": "",
+      "basedir": "ai-lab-demo/recipe",
       "readme": "",
       "recommended": [
         "hf.TheBloke.mistral-7b-instruct-v0.2.Q4_K_M"
