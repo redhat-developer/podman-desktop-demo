@@ -2,8 +2,7 @@
 
 ## Prerequisites
 
-- Install the MINC extension:  
-  `ghcr.io/minc-org/minc-extension:next` (for the current development version)
+- Install the MINC extension from the catalog of extensions
 - Install the demo extension:  
   `quay.io/podman-desktop-demo/podman-desktop-extension`
 - Clone this demo repository.
