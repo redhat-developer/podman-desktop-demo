@@ -1,0 +1,2 @@
+FROM registry.access.redhat.com/ubi9/httpd-24@sha256:87f232768f58423776d56db593862aff5024c106d357ec2d443ef48f0ae8019e
+COPY index.html /var/www/html/index.html
