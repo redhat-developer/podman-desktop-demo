@@ -1,4 +1,4 @@
-pip==24.0
+pip==26.0.1
 pytest-container==0.4.0
 pytest-selenium==4.1.0
 pytest-testinfra==10.1.0
