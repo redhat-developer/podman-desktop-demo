@@ -12,7 +12,7 @@ import (
 
 const (
 	// Version number. Stable API within major version numbers.
-	Version = 2.6
+	Version = 2.8
 
 	// The default [url]:port that Redis is running at
 	defaultRedisServer = ":6379"
@@ -45,6 +45,8 @@ var (
 	// How many connections should stay ready for requests, at a maximum?
 	// When an idle connection is used, new idle connections are created.
 	maxIdleConnections = 3
+
+	ErrNotFound = errors.New("not found")
 )
 
 /* --- Helper functions --- */
@@ -313,6 +315,20 @@ func (rl *List) LastN(n int) ([]string, error) {
 	return strs, err
 }
 
+// Get (up to) the last N (uint64) elements of a list
+func (rl *List) LastUpToN(n uint64) ([]string, error) {
+	if n == 0 {
+		return []string{}, nil
+	}
+	conn := rl.pool.Get(rl.dbindex)
+	result, err := redis.Values(conn.Do("LRANGE", rl.id, "-"+strconv.FormatUint(n, 10), "-1"))
+	strs := make([]string, len(result))
+	for i := 0; i < len(result); i++ {
+		strs[i] = getString(result, i)
+	}
+	return strs, err
+}
+
 // Deprecated
 func (rl *List) GetLastN(n int) ([]string, error) {
 	return rl.LastN(n)
@@ -545,11 +561,54 @@ func (rh *HashMap) All() ([]string, error) {
 		strs[i] = getString(result, i)[idlen+1:]
 	}
 	return strs, err
+
 }
 
 // Deprecated
 func (rh *HashMap) GetAll() ([]string, error) {
 	return rh.All()
+}
+
+// FindIDByFieldValue searches for an element ID (e.g., username) where the specified field has the specified value.
+// It returns the element ID if found, or an error if not.
+func (rh *HashMap) FindIDByFieldValue(field, value string) (string, error) {
+	conn := rh.pool.Get(rh.dbindex)
+	defer conn.Close()
+
+	var cursor int64 = 0
+	pattern := rh.id + ":*"
+
+	for {
+		// Use SCAN to iterate over keys matching the pattern
+		res, err := redis.Values(conn.Do("SCAN", cursor, "MATCH", pattern, "COUNT", 1024))
+		if err != nil {
+			return "", err
+		}
+		// Parse the SCAN response
+		var keys []string
+		_, err = redis.Scan(res, &cursor, &keys)
+		if err != nil {
+			return "", err
+		}
+		// Iterate over the keys
+		for _, key := range keys {
+			// Get the value of the specified field
+			val, err := redis.String(conn.Do("HGET", key, field))
+			if err != nil && err != redis.ErrNil {
+				return "", err
+			}
+			if val == value {
+				// Extract the element ID from the key
+				elementID := strings.TrimPrefix(key, rh.id+":")
+				return elementID, nil
+			}
+		}
+		// If cursor is 0, the iteration is complete
+		if cursor == 0 {
+			break
+		}
+	}
+	return "", ErrNotFound
 }
 
 // Remove a key for an entry in a hashmap (for instance the email field for a user)
