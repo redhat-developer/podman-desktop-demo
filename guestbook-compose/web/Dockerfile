@@ -14,7 +14,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-FROM docker.io/library/golang@sha256:013ebb36af72d90db0175b077ffa6469ecccfe10ba2a2389cbbc4c1010a83b96
+FROM docker.io/library/golang@sha256:d2d2bc1c84f7e60d7d2438a3836ae7d0c847f4888464e7ec9ba3a1339a1ee804
 WORKDIR /app
 
 # Copy the entire project which includes the public directory, vendoring, etc.

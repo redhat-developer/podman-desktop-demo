@@ -1,6 +1,6 @@
 module github.com/redhat-developer/podman-desktop-demo
 
-go 1.21.2
+go 1.24
 
 require (
 	github.com/codegangsta/negroni v1.0.0
